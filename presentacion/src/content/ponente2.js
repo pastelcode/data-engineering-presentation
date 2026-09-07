@@ -1,0 +1,268 @@
+export const PONENTE2_CONTENT = {
+  etl: {
+    title: "ETL. Limpiar antes de guardar",
+    titleIcon: "funnel-simple",
+    boxes: [
+      { title: "Extract", sub: "ERP, WMS, API, txt", icon: "hard-drives" },
+      { title: "Transform", sub: "en servidor intermedio", note: "filtrar, corregir, unificar", icon: "broom" },
+      { title: "Load", sub: "warehouse central", icon: "warehouse" }
+    ],
+    alert: {
+      icon: "warning-circle",
+      text: "El dato crudo se descarta. Un cambio en la regla exige reextraer desde el origen."
+    },
+    facts: [
+      { icon: "clock-countdown", text: "Antes almacenar era costoso. Disco limitado en los 90, cada fila contaba.", warn: false },
+      { icon: "warning-circle", text: "Un cambio en la lógica obliga a reprocesar desde la fuente y a veces la fuente ya no conserva el histórico.", warn: true }
+    ]
+  },
+  elt: {
+    title: "ELT. Cargar todo, transformar después",
+    titleIcon: "cloud-arrow-up",
+    boxes: [
+      { title: "Extract", sub: "todo en crudo", icon: "hard-drives" },
+      { title: "Load", sub: "lake en la nube", note: "S3, GCS, barato y elástico", icon: "cloud" },
+      { title: "Transform", sub: "dentro del warehouse", note: "SQL, Spark, solo lo necesario", icon: "lightning" }
+    ],
+    alert: {
+      icon: "check-circle",
+      text: "El dato crudo persiste. Permite retransformar sin volver al origen."
+    },
+    bignums: [
+      { value: 0.023, suffix: "$ /GB mes", variant: "green", decimals: 3, cap: "S3 Standard actual. En los 90, miles de dólares por GB. Por ello ELT no existía." },
+      { value: "∞", suffix: "", variant: "", cap: "Reprocesos posibles sobre el mismo dato crudo." }
+    ]
+  },
+  versus: {
+    title: "ETL y ELT",
+    titleIcon: "arrows-left-right",
+    left: {
+      icon: "funnel-simple",
+      title: "ETL",
+      sub: "Transforma fuera",
+      items: ["Guarda solo lo limpio", "Dato crudo descartado", "Rígido ante cambios del negocio", "Servidor intermedio a cargo"]
+    },
+    right: {
+      icon: "cloud-arrow-up",
+      title: "ELT",
+      sub: "Transforma dentro",
+      items: ["Guarda todo en crudo", "Dato crudo disponible", "Flexible ante cambios de lógica", "El warehouse ejecuta el trabajo"]
+    },
+    fact: {
+      icon: "lightbulb",
+      text: "Ninguno es superior en todos los casos. ETL aún es útil si el origen no puede entregar dato crudo o hay datos sensibles."
+    }
+  },
+  batchStreaming: {
+    title: "Batch y streaming. Dos modos de movimiento",
+    titleIcon: "timer",
+    batch: {
+      title: "Batch",
+      tag: "lotes",
+      icon: "clock-countdown",
+      truckIcon: "truck",
+      value: "horas",
+      desc: "Ejecución programada, generalmente nocturna. Acumula el día y procesa en bloque. Uso típico: inventario y cierre."
+    },
+    streaming: {
+      title: "Streaming",
+      tag: "evento a evento",
+      icon: "lightning",
+      value: 50,
+      suffix: "ms",
+      desc: "Cada evento se procesa en milisegundos. Uso típico: precio dinámico y optimización de rutas."
+    },
+    fact: {
+      icon: "check-circle",
+      text: "La mayoría de organizaciones usa ambos. Batch para lo estratégico, streaming para lo que requiere respuesta inmediata."
+    }
+  },
+  etlt: {
+    title: "ET(L)T. Variante intermedia",
+    titleIcon: "gear",
+    steps: [
+      { title: "Extract", sub: "fuentes", icon: "hard-drives" },
+      { title: "t", sub: "validar, enmascarar", icon: "shield-check", variant: "light" },
+      { title: "Load", sub: "crudo y casi crudo", icon: "cloud", variant: "solid" },
+      { title: "Transform", sub: "dentro del warehouse", icon: "code", variant: "accent" }
+    ],
+    arrows: [
+      { text: "ligero", size: "small" },
+      { text: "", size: "" },
+      { text: "pesado", size: "" }
+    ],
+    dbt: {
+      icon: "code",
+      title: "dbt ejecuta la transformación final con SQL",
+      text: "Modela tablas como select, versiona el código y el warehouse compila. Sin servidores adicionales."
+    },
+    fact: {
+      icon: "lightbulb",
+      text: "En la práctica, ELT puro es poco común. Una transformación ligera previa evita almacenar datos inválidos y reduce exposición de información sensible."
+    }
+  },
+  timeline: {
+    title: "Evolución del almacenamiento analítico",
+    titleIcon: "clock",
+    periods: [
+      { year: "1990", name: "Warehouse", detail: "Teradata, Oracle", state: "done" },
+      { year: "2010", name: "Lake", detail: "S3, GCS, Hadoop", state: "done" },
+      { year: "2020", name: "Lakehouse", detail: "Delta, Iceberg, Hudi", state: "now" }
+    ],
+    summary: [
+      { icon: "warehouse", title: "Orden", sub: "Estructura rígida" },
+      { icon: "waves", title: "Todo cabe", sub: "Riesgo de desorden sin gobierno" },
+      { icon: "stack-simple", title: "Ambas", sub: "Costo bajo y control", variant: "accent" }
+    ]
+  },
+  warehouse: {
+    title: "Data warehouse. Almacenamiento estructurado",
+    titleIcon: "warehouse",
+    shelves: [
+      ["clientes", "pedidos", "inventario", "costos"],
+      ["rutas", "proveedores", "pagos", "demanda"]
+    ],
+    facts: [
+      { icon: "check-circle", text: "Filas y columnas con esquema fijo. El esquema se define antes de almacenar. SQL con buen rendimiento.", warn: false },
+      { icon: "check-circle", text: "Optimizado para analítica. Una agregación responde en segundos.", warn: false },
+      { icon: "warning-circle", text: "No admite datos no estructurados. Una imagen, un audio o un JSON anidado no tiene ubicación definida.", warn: true }
+    ]
+  },
+  lake: {
+    title: "Data lake. Almacenamiento de objetos sin esquema",
+    titleIcon: "waves",
+    files: [
+      { icon: "file", name: "pedidos.csv", pos: { left: "7%", top: "18%" }, drift: "drift1" },
+      { icon: "image", name: "foto.jpg", pos: { left: "37%", top: "20%" }, drift: "drift3" },
+      { icon: "music-notes", name: "audio.mp3", pos: { left: "67%", top: "18%" }, drift: "drift1" },
+      { icon: "code", name: "eventos.json", pos: { left: "9%", top: "60%" }, drift: "drift2" },
+      { icon: "stack-simple", name: "parquet", pos: { left: "40%", top: "62%" }, drift: "drift3" },
+      { icon: "film-strip", name: "video.mp4", pos: { left: "70%", top: "60%" }, drift: "drift2" }
+    ],
+    facts: [
+      { icon: "check-circle", text: "Almacena cualquier archivo sin definir esquema. El esquema se aplica al leer.", warn: false },
+      { icon: "check-circle", text: "Costo bajo y elástico. S3 y GCS escalan sin adquirir servidores.", warn: false },
+      { icon: "warning-circle", text: "Si no se tiene un catálogo establecido ni buena gobernanza se vuelve un data swamp. El dato existe pero es difícil localizarlo y validar su utilidad.", warn: true }
+    ]
+  },
+  lakehouse: {
+    title: "Data lakehouse. Unión de lake y warehouse",
+    titleIcon: "stack-simple",
+    lakeLabel: "lake bajo, Parquet en S3",
+    pillars: [
+      { icon: "shield-check", label: "ACID" },
+      { icon: "graph", label: "time travel" },
+      { icon: "code", label: "SQL + Python" }
+    ],
+    medallion: [
+      { key: "bronze", title: "Bronze", sub: "crudo tal cual llegó" },
+      { key: "silver", title: "Silver", sub: "limpio, unificado" },
+      { key: "gold", title: "Gold", sub: "listo para el modelo" }
+    ],
+    facts: [
+      { icon: "check-circle", text: "Capa abierta Delta, Iceberg o Hudi sobre el lake. Aporta transacciones, esquema y control sin perder el costo bajo." },
+      { icon: "lightbulb", text: "La arquitectura medallion ordena el flujo. Bronze a Silver a Gold. Cada salto añade calidad." }
+    ]
+  },
+  compare: {
+    title: "Las tres arquitecturas de almacenamiento",
+    titleIcon: "scales",
+    header: [
+      { icon: "warehouse", label: "warehouse" },
+      { icon: "waves", label: "lake" },
+      { icon: "stack-simple", label: "lakehouse", variant: "accent" }
+    ],
+    rows: [
+      { label: "Qué guarda", cols: ["solo tabla", "cualquier archivo", "tabla y archivo"], strongLast: true },
+      { label: "Esquema", cols: ["al escribir", "al leer", "las dos"], strongLast: true },
+      { label: "Costo", cols: ["alto", "bajo", "bajo"], variants: ["warn", "good", "good"] },
+      { label: "ACID", cols: ["sí", "no", "sí"], variants: ["", "warn", "strong"] },
+      { label: "Para qué sirve", cols: ["BI clásico", "raw + ML", "todo lo anterior"], strongLast: true }
+    ]
+  },
+  kafka: {
+    title: "Kafka. Transporte de eventos distribuido",
+    titleIcon: "broadcast",
+    producers: { icon: "hard-drives", title: "Productores", sub: "web, app, sensores" },
+    core: { icon: "queue", label: "Kafka log · particiones", replica: "replicado x3 · rebobinable" },
+    consumers: { icon: "cpu", title: "Consumidores", sub: "Spark, warehouse, alertas" },
+    facts: [
+      { icon: "check-circle", text: "No es una cola que se borra al leer. Es un log. Permite releer desde un punto anterior si hay una falla." },
+      { icon: "lightning", text: "Millones de eventos por segundo sin colapsar. Cada partición escala de forma independiente." }
+    ]
+  },
+  spark: {
+    title: "Spark. Cómputo distribuido",
+    titleIcon: "cpu",
+    single: {
+      icon: "hard-drives",
+      title: "1 servidor",
+      sub: "RAM llena",
+      ram: "128 GB · capacidad superada",
+      variant: "fail"
+    },
+    cluster: [
+      { title: "N1", sub: "shard A" },
+      { title: "N2", sub: "shard B" },
+      { title: "N3", sub: "shard C" },
+      { title: "N4", sub: "shard D" }
+    ],
+    shuffle: { icon: "shuffle", label: "shuffle" },
+    facts: [
+      { icon: "check-circle", text: "Spark divide el archivo en fragmentos y cada máquina procesa uno en paralelo. La vista es un solo DataFrame.", warn: false },
+      { icon: "warning-circle", text: "El costo relevante es el shuffle. Mover datos entre nodos consume red y disco. El diseño busca minimizarlo.", warn: true }
+    ]
+  },
+  airflow: {
+    title: "Airflow. Orquestación de flujos",
+    titleIcon: "git-branch",
+    nodes: [
+      { icon: "clock-countdown", title: "2 am", sub: "schedule", variant: "start" },
+      { icon: "download-simple", title: "Ingesta", sub: "Kafka a S3" },
+      { icon: "funnel-simple", title: "Transform", sub: "Spark job", variant: "running" },
+      { icon: "check-circle", title: "Validar", sub: "QA y trazabilidad", variant: "pending" }
+    ],
+    branch: [
+      { icon: "warning-circle", title: "Reintento x2", sub: "si falla a las 3 am", variant: "retry" },
+      { icon: "bell", title: "Alerta", sub: "Slack, mail", variant: "alert" }
+    ],
+    rule: "Regla: C no se ejecuta si B falla. Todo queda registrado.",
+    fact: { icon: "check-circle", text: "El orden se define una vez como código. Airflow respeta dependencias, reintenta y notifica." }
+  },
+  pipeline: {
+    title: "Pipeline extremo a extremo. Del evento a la tabla analítica",
+    titleIcon: "flow-arrow",
+    steps: [
+      { icon: "cursor-click", title: "1. Evento", sub: "solicitud del cliente", tag: "JSON crudo" },
+      { icon: "broadcast", title: "2. Kafka", sub: "evento distribuido", tag: "log replicado" },
+      { icon: "cpu", title: "3. Spark", sub: "normaliza", tag: "quita nulos, une" },
+      { icon: "stack-simple", title: "4. Lakehouse", sub: "Gold", tag: "tabla validada" },
+      { icon: "chart-bar", title: "5. Modelo IO", sub: "decide", tag: "ruta, stock, precio" }
+    ],
+    legend: ["Ingesta", "Proceso", "Almacenamiento", "Consumo"]
+  },
+  mapping: {
+    title: "Función de cada componente en el pipeline",
+    titleIcon: "plugs-connected",
+    zones: [
+      { icon: "broadcast", title: "Kafka", desc: "Transporta. No transforma.", items: ["Amortigua picos", "Garantiza que no hay pérdida"] },
+      { icon: "cpu", title: "Spark + dbt", desc: "Transforma a escala.", items: ["Spark limpia volumen", "dbt modela con SQL"], variant: "core" },
+      { icon: "git-branch", title: "Airflow", desc: "Ordena. No mueve datos.", items: ["Dispara cada bloque", "Reintenta y notifica"] }
+    ],
+    callout: { icon: "stack-simple", text: "Todo escribe en el mismo sitio. El lakehouse. Bronze con dato crudo, Silver limpio, Gold para el solver." }
+  },
+  puente: {
+    title: "¿Cómo se conecta esto directamente con los modelos matemáticos de Investigación de Operaciones?",
+    titleIcon: "flag-checkered",
+    facts: [
+      { icon: "arrow-right", text: "Con el pipeline operativo, la siguiente etapa conecta esa tabla a un modelo de IO. Qué función se minimiza y qué restricciones aplican." },
+      { icon: "arrow-right", text: "Cada cuánto resuelve el solver y qué ocurre si un dato llega tarde." }
+    ],
+    src: "Sin dato confiable no hay óptimo válido."
+  },
+  numbers: {
+    s3Cost: 0.023,
+    streamingMs: 50,
+    pipelineSteps: 5
+  }
+};

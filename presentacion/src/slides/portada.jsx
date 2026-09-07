@@ -1,31 +1,23 @@
 import { Icon } from "./Icon";
+import { PORTADA_CONTENT as C } from "../content/portada.js";
 
 export const PORTADA = [
   () => (
     <>
       <h1>
-        Data Engineering <Icon name="database" />
+        {C.title} <Icon name={C.titleIcon} />
       </h1>
-      <div className="cover-meta">
-        Investigación de Operaciones · Andrés Tobar · Jostyne Montenegro ·
-        Samuel Marroquín · Septiembre 2026
-      </div>
+      <div className="cover-meta">{C.meta}</div>
       <div className="bignum-row">
-        <div className="bignum-block">
-          <div className="bignum amber">
-            70-80<small>%</small>
+        {C.bignums.map((b, i) => (
+          <div key={i} className="bignum-block">
+            <div className={`bignum ${b.variant}`.trim()}>
+              {b.value}
+              {b.suffix ? <small>{b.suffix}</small> : null}
+            </div>
+            <div className="cap">{b.cap}</div>
           </div>
-          <div className="cap">
-            Del esfuerzo de un proyecto de analítica se va en conseguir y
-            limpiar datos, no en el algoritmo. Encuesta Anaconda, 2020.
-          </div>
-        </div>
-        <div className="bignum-block">
-          <div className="bignum">4</div>
-          <div className="cap">
-            Fases del ciclo de vida del dato, de la ingesta al consumo.
-          </div>
-        </div>
+        ))}
       </div>
     </>
   ),
