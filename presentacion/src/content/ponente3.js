@@ -45,6 +45,89 @@ export const PONENTE3_CONTENT = {
       }
     ]
   },
+  produccion: {
+    title: "Planificar la producción",
+    titleIcon: "factory",
+    bignum: {
+      value: 3,
+      cap: "Mundos que alimentan el modelo: demanda, inventario, personal."
+    },
+    facts: [
+      {
+        icon: "factory",
+        text: "Optimizar inventarios o turnos de fábrica.",
+        warn: false
+      },
+      {
+        icon: "database",
+        text: "El modelo necesita demanda, inventario y personal reconciliados.",
+        warn: false
+      }
+    ]
+  },
+  universos: {
+    title: "Tres universos paralelos",
+    titleIcon: "squares-four",
+    worlds: [
+      { icon: "storefront", title: "Comercial", sub: "demanda prevista", rhythm: "cada mes", speed: 6 },
+      { icon: "warehouse", title: "Almacén", sub: "inventario físico", rhythm: "cada hora", speed: 1.6 },
+      { icon: "users", title: "RRHH", sub: "reglas sindicales", rhythm: "cada año", speed: 12 }
+    ],
+    fact: {
+      icon: "warning-circle",
+      text: "Hablan idiomas distintos. Se actualizan a ritmos distintos.",
+      warn: true
+    }
+  },
+  espejismo: {
+    title: "El espejismo",
+    titleIcon: "warning-diamond",
+    bignum: {
+      value: 1000,
+      cap: "Unidades a fabricar este domingo."
+    },
+    stamp: "Infactible",
+    facts: [
+      {
+        icon: "package",
+        text: "El almacén no tiene materia prima.",
+        warn: true
+      },
+      {
+        icon: "calendar-blank",
+        text: "El sindicato prohíbe operar los domingos.",
+        warn: true
+      }
+    ]
+  },
+  marco: {
+    title: "Un mismo marco temporal",
+    titleIcon: "clock-countdown",
+    sources: ["Ventas", "WMS", "RRHH"],
+    center: { icon: "database", title: "Lakehouse" },
+    facts: [
+      {
+        icon: "database",
+        text: "Un pipeline batch concilia los tres mundos.",
+        warn: false
+      },
+      {
+        icon: "clock-countdown",
+        text: "Todo queda bajo un mismo marco temporal.",
+        warn: false
+      }
+    ]
+  },
+  loteplan: {
+    title: "Del lote al plan",
+    titleIcon: "flow-arrow",
+    steps: [
+      { icon: "database", title: "1. Lakehouse", sub: "dato conciliado", tag: "series, stock, turnos" },
+      { icon: "cpu", title: "2. Solver", sub: "optimiza", tag: "inventarios y turnos" },
+      { icon: "package", title: "3. Plan", sub: "factible en planta", tag: "turnos e inventarios" }
+    ],
+    legend: ["Lakehouse", "Solver", "Plan"]
+  },
   caso: {
     title: "El caso: plataformas de movilidad",
     titleIcon: "taxi",
@@ -69,20 +152,32 @@ export const PONENTE3_CONTENT = {
   codicioso: {
     title: "Codicioso contra global",
     titleIcon: "shuffle",
-    bignums: [
-      { value: 1, suffix: "min", cap: "Auto 1 a pasajero A." },
-      { value: 20, suffix: "min", variant: "amber", cap: "Auto 1 a pasajero B." },
-      { value: 4, suffix: "min", cap: "Auto 2 a ambos." }
+    cols: ["Pasajero A", "Pasajero B"],
+    rows: [
+      {
+        label: "Auto 1",
+        cells: [
+          { value: 1, suffix: "min" },
+          { value: 3, suffix: "min" }
+        ]
+      },
+      {
+        label: "Auto 2",
+        cells: [
+          { value: 4, suffix: "min" },
+          { value: 20, suffix: "min", variant: "amber" }
+        ]
+      }
     ],
     facts: [
       {
         icon: "warning-circle",
-        text: "Greedy asigna auto 1 a A por cercanía. Condena a B a 20 minutos.",
+        text: "Greedy: auto 1 a A en 1 minuto. B queda con auto 2: 20 minutos. Total 21.",
         warn: true
       },
       {
         icon: "check-circle",
-        text: "El óptimo global sacrifica segundos de A. Auto 2 a A, auto 1 a B. Promedio bajo.",
+        text: "Global: auto 2 a A y auto 1 a B. Total 7. Se sacrifican 3 minutos de A.",
         warn: false
       }
     ]
@@ -160,9 +255,50 @@ export const PONENTE3_CONTENT = {
       }
     ]
   },
+  devops: {
+    title: "DevOps",
+    titleIcon: "infinity",
+    left: { icon: "code", title: "Dev", sub: "código y pruebas" },
+    right: { icon: "monitor", title: "Ops", sub: "despliegue y monitoreo" },
+    linkOut: "despliega",
+    linkBack: "monitorea",
+    facts: [
+      {
+        icon: "arrows-clockwise",
+        text: "Integración continua. Cada cambio pasa pruebas antes de salir.",
+        warn: false
+      },
+      {
+        icon: "eye",
+        text: "El monitoreo devuelve lo que pasa en producción.",
+        warn: false
+      }
+    ]
+  },
   drift: {
     title: "Estabilidad en producción",
     titleIcon: "warning-diamond",
+    facts: [
+      {
+        icon: "check-circle",
+        text: "En desarrollo todo cuadra. Datos fijos, modelo estable.",
+        warn: false
+      },
+      {
+        icon: "warning-circle",
+        text: "En producción el mundo cambia. Precios, calles, hábitos.",
+        warn: true
+      },
+      {
+        icon: "arrow-right",
+        text: "El modelo no cambió. Cambió lo que lo alimenta.",
+        warn: false
+      }
+    ]
+  },
+  datadrift: {
+    title: "Data drift",
+    titleIcon: "chart-line-up",
     bignum: {
       value: 40,
       suffix: "%",
@@ -171,18 +307,29 @@ export const PONENTE3_CONTENT = {
     },
     facts: [
       {
-        icon: "arrows-clockwise",
-        text: "DataOps. Pruebas continuas, versionado del dato y monitoreo en cada paso del flujo.",
-        warn: false
-      },
-      {
         icon: "chart-line-up",
-        text: "Data drift. La distribución de las variables cambia. Un puente cerrado o un alza de precios. El solver optimiza sobre supuestos falsos.",
+        text: "La distribución de las variables cambia. Un puente cerrado o un alza de precios.",
         warn: true
       },
       {
+        icon: "warning-circle",
+        text: "El solver optimiza sobre supuestos falsos.",
+        warn: true
+      }
+    ]
+  },
+  conceptdrift: {
+    title: "Concept drift",
+    titleIcon: "arrows-split",
+    facts: [
+      {
         icon: "arrows-split",
-        text: "Concept drift. La relación entre entrada y salida se rompe. Cambios permanentes, como los patrones tras la pandemia. La función objetivo del pasado deja de valer.",
+        text: "La relación entre entrada y salida se rompe.",
+        warn: true
+      },
+      {
+        icon: "clock-countdown",
+        text: "Patrones tras la pandemia. La función objetivo del pasado deja de valer.",
         warn: true
       }
     ]
@@ -190,28 +337,23 @@ export const PONENTE3_CONTENT = {
   contencion: {
     title: "El dato no pasa si no cumple",
     titleIcon: "shield-check",
-    bignum: {
-      value: 2,
-      suffix: "%",
-      cap: "Umbral de nulos que dispara la alerta antes de que el lote llegue al solver."
+    checks: [
+      { icon: "package", title: "Demanda ≥ 0", sub: "nunca negativa" },
+      { icon: "map-pin", title: "Nulos ≤ 2%", sub: "direcciones de clientes" },
+      { icon: "timer", title: "Tiempos posibles", sub: "ningún camión cruza el país en 3 minutos" }
+    ],
+    solver: {
+      title: "Solver",
+      lockIcon: "lock",
+      lockSub: "bloqueado",
+      openIcon: "lock-open",
+      openSub: "desbloqueado"
     },
-    facts: [
-      {
-        icon: "file-text",
-        text: "Contratos de datos y pruebas con Great Expectations en cada paso del flujo.",
-        warn: false
-      },
-      {
-        icon: "check-circle",
-        text: "Se valida que la demanda no sea negativa. Los tiempos de viaje deben caer en rangos físicos posibles.",
-        warn: false
-      },
-      {
-        icon: "warning-circle",
-        text: "Un lote corrupto llega al solver. Este marca infeasible o asigna recursos absurdos. La operación se detiene.",
-        warn: true
-      }
-    ]
+    fact: {
+      icon: "warning-circle",
+      text: "Si una validación falla, el lote no pasa. Mejor infeasible que una decisión absurda.",
+      warn: true
+    }
   },
   mesh: {
     title: "De equipo centralizado a dominios dueños",
@@ -255,30 +397,10 @@ export const PONENTE3_CONTENT = {
       }
     ]
   },
-  dinamica: {
-    title: "El Solver en el Mundo Real",
-    titleIcon: "question",
-    bignums: [
-      { value: 5, cap: "Bodegas centrales." },
-      { value: 20, cap: "Camiones." },
-      { value: 500, cap: "Clientes por día." }
-    ],
-    facts: [
-      {
-        icon: "map-pin",
-        text: "Direcciones con abreviaturas, referencias vagas y sin coordenadas válidas.",
-        warn: true
-      },
-      {
-        icon: "ruler",
-        text: "Pesos en libras y en kilogramos, empaques sin dimensiones volumétricas.",
-        warn: true
-      },
-      {
-        icon: "clock-countdown",
-        text: "Ventanas horarias de descarga que solo viven en la memoria de los conductores veteranos.",
-        warn: true
-      }
-    ]
+  gracias: {
+    title: "Gracias",
+    titleIcon: "handshake",
+    subtitle: "Preguntas y discusión",
+    names: "Andrés Tobar · Jostyne Montenegro · Samuel Marroquín"
   }
 };
