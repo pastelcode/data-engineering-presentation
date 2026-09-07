@@ -308,12 +308,12 @@ export const PONENTE3_CONTENT = {
     facts: [
       {
         icon: "chart-line-up",
-        text: "La distribución de las variables cambia. Un puente cerrado o un alza de precios.",
+        text: "La distribución cambia. Las obras del AeroMetro cierran carriles en la Roosevelt. Los tiempos históricos mienten.",
         warn: true
       },
       {
         icon: "warning-circle",
-        text: "El solver optimiza sobre supuestos falsos.",
+        text: "El solver asigna con la matriz vieja. Manda flotas hacia carriles cerrados.",
         warn: true
       }
     ]
@@ -329,7 +329,7 @@ export const PONENTE3_CONTENT = {
       },
       {
         icon: "clock-countdown",
-        text: "Patrones tras la pandemia. La función objetivo del pasado deja de valer.",
+        text: "Hoy el pico matutino entra por la Roosevelt. Con la Línea 2 ese flujo viaja por cable. El modelo sigue asignando como si el pico siguiera en la calle.",
         warn: true
       }
     ]
