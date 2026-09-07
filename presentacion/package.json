@@ -4,8 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:ponente3": "vite --config vite.ponente3.config.js --open /index.ponente3.html",
     "build": "vite build",
-    "preview": "vite preview"
+    "build:ponente3": "vite build --config vite.ponente3.config.js && cp dist-ponente3/index.ponente3.html dist-ponente3/index.html",
+    "preview": "vite preview",
+    "preview:ponente3": "vite preview --outDir dist-ponente3 --open"
   },
   "dependencies": {
     "@number-flow/react": "^0.6.2",
