@@ -256,7 +256,7 @@ export const PONENTE3_CONTENT = {
     ]
   },
   devops: {
-    title: "DevOps",
+    title: "DevOps -> DataOps",
     titleIcon: "infinity",
     left: { icon: "code", title: "Dev", sub: "código y pruebas" },
     right: { icon: "monitor", title: "Ops", sub: "despliegue y monitoreo" },
