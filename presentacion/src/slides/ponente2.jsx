@@ -1,7 +1,503 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NumberFlow from "@number-flow/react";
 import { Icon } from "./Icon";
 import { PONENTE2_CONTENT as C } from "../content/ponente2.js";
+
+function HookSlide() {
+  const S = C.hook;
+  return (
+    <>
+      <h2 style={{ textAlign: "center", justifyContent: "center" }}>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className="hook-visual" style={{ alignItems: "center", marginLeft: "auto", marginRight: "auto" }}>
+        <div className="hook-button">
+          <Icon name="cursor-click" />
+          {S.button}
+        </div>
+        <div className="hook-hint" style={{ textAlign: "center" }}>{S.hint}</div>
+      </div>
+    </>
+  );
+}
+
+function CadenaSlide() {
+  const S = C.cadena;
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className="cadena-chain">
+        {S.steps.map((step, i) => (
+          <React.Fragment key={step}>
+            <div className="cadena-step">
+              <span>{step}</span>
+            </div>
+            {i < S.steps.length - 1 && <i className="ph ph-arrow-down cadena-arrow" />}
+          </React.Fragment>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function EmpresaDatosSlide() {
+  const S = C.empresaDatos;
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <p style={{ fontSize: 17, color: "var(--muted)", marginTop: 8, lineHeight: 1.5 }}>{S.desc}</p>
+      <div className="hex" style={{ marginTop: 20 }}>
+        {S.items.map((it, i) => (
+          <React.Fragment key={it.label}>
+            <div className="zone" style={{ textAlign: "center" }}>
+              <Icon name={it.icon} />
+              <b>{it.label}</b>
+              <p>{it.sub}</p>
+            </div>
+            {i < S.items.length - 1 && (
+              <div className="arrow">
+                <Icon name="arrow-right" />
+              </div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <ul className="fact-list">
+        <li>
+          <Icon name={S.fact.icon} />
+          {S.fact.text}
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function LimitacionesSlide() {
+  const S = C.limitaciones;
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className="bignum-row">
+        <div className="bignum-block">
+          <div className="bignum amber">
+            MB<small> caro</small>
+          </div>
+          <div className="cap">{S.highlight}</div>
+        </div>
+        <div className="bignum-block" style={{ maxWidth: 420 }}>
+          <div style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.5, paddingTop: 12 }}>{S.detail}</div>
+        </div>
+      </div>
+      <ul className="fact-list">
+        <li>
+          <Icon name={S.fact.icon} />
+          {S.fact.text}
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function EtlAnalogiaSlide() {
+  const S = C.etlAnalogia;
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className="analogy-visual">
+        <div className="analogy-steps">
+          {S.steps.map((step, i) => (
+            <React.Fragment key={step.label}>
+              <div className="analogy-step">
+                <Icon name={step.icon} />
+                <b>{step.label}</b>
+                <span>{step.sub}</span>
+              </div>
+              {i < S.steps.length - 1 && (
+                <div className="analogy-arrow">
+                  <Icon name="arrow-down" />
+                </div>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+        <div className="analogy-note">
+          <Icon name="quotes" /> {S.note}
+        </div>
+      </div>
+      <ul className="fact-list">
+        <li>
+          <Icon name={S.fact.icon} />
+          {S.fact.text}
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function ProblemaEtlSlide() {
+  const S = C.problemaEtl;
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className="hex">
+        <div className="zone">
+          <Icon name="cooking-pot" />
+          <b>{S.chef}</b>
+        </div>
+        <div className="arrow">
+          <Icon name="arrow-right" />
+        </div>
+        <div className="zone core">
+          <Icon name="warning-circle" />
+          <b>{S.answer}</b>
+          <p>{S.desc}</p>
+        </div>
+      </div>
+      <ul className="fact-list">
+        <li>
+          <Icon name={S.fact.icon} />
+          {S.fact.text}
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function EltAnalogiaSlide() {
+  const S = C.eltAnalogia;
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className="analogy-visual alt">
+        <div className="analogy-steps">
+          {S.steps.map((step, i) => (
+            <React.Fragment key={step.label}>
+              <div className="analogy-step">
+                <Icon name={step.icon} />
+                <b>{step.label}</b>
+                <span>{step.sub}</span>
+              </div>
+              {i < S.steps.length - 1 && (
+                <div className="analogy-arrow">
+                  <Icon name="arrow-down" />
+                </div>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+        <div className="analogy-note">
+          <Icon name="quotes" /> {S.note}
+        </div>
+      </div>
+      <ul className="fact-list">
+        <li>
+          <Icon name={S.fact.icon} />
+          {S.fact.text}
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function SwampSlide() {
+  const S = C.swamp;
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className="swamp-visual">
+        <div className="swamp-folder">
+          <Icon name="folder" />
+          <b>{S.folder}</b>
+          <ul>
+            {S.files.map((f) => (
+              <li key={f}>{f}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="arrow">
+          <Icon name="arrow-right" />
+        </div>
+        <div className="zone core">
+          <Icon name="warning-circle" />
+          <b>{S.label}</b>
+          <p>{S.desc}</p>
+        </div>
+      </div>
+      <div className="cadena-question">{S.question}</div>
+      <ul className="fact-list">
+        <li className="warn">
+          <Icon name={S.fact.icon} />
+          {S.fact.text}
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function AcidSlide() {
+  const S = C.acid;
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className="acid-visual">
+        <div className="acid-transfer">
+          <span>Cuenta A</span>
+          <i className="ph ph-arrow-right" />
+          <span className="acid-amount">$100</span>
+          <i className="ph ph-arrow-right" />
+          <span>Cuenta B</span>
+        </div>
+        <div className="acid-fail">
+          <Icon name="warning-circle" /> {S.fail}
+        </div>
+        <div className="acid-question">{S.question}</div>
+        <div className="acid-answer">
+          <Icon name={S.fact.icon} /> {S.answer}
+        </div>
+        <div className="acid-desc">{S.desc}</div>
+      </div>
+      <ul className="fact-list">
+        <li>
+          <Icon name={S.fact.icon} />
+          {S.fact.text}
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function CoffeeBreakSlide({ active }) {
+  const S = C.coffeeBreak;
+  const TOTAL = S.durationSec;
+  const REAL_TOTAL = 900;
+  const [realElapsed, setRealElapsed] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const accumulatedRef = useRef(0);
+  const startRef = useRef(null);
+
+  const getDisplayed = (real) => {
+    if (real <= 60) return TOTAL - real;
+    if (real <= 840) {
+      const x = (real - 60) / 780;
+      const g = 1.25 * x * x * x - 1.875 * x * x + 1.625 * x;
+      return 540 - 480 * g;
+    }
+    if (real < REAL_TOTAL) return 60 - (real - 840);
+    return 0;
+  };
+
+  const displayedFloat = getDisplayed(realElapsed);
+  const displayedInt = Math.max(0, Math.ceil(displayedFloat - 1e-9));
+  const mins = String(Math.floor(displayedInt / 60)).padStart(2, "0");
+  const secs = String(displayedInt % 60).padStart(2, "0");
+  const pct = displayedFloat / TOTAL;
+  const r = 108;
+  const circ = 2 * Math.PI * r;
+  const offset = circ * (1 - pct);
+  const isWarning = displayedInt <= 60 && displayedInt > 0 && running;
+  const isDone = displayedInt === 0 && realElapsed >= REAL_TOTAL - 0.5;
+
+  useEffect(() => {
+    if (!active || !running) return;
+    startRef.current = Date.now();
+    const id = setInterval(() => {
+      const elapsed = accumulatedRef.current + (Date.now() - startRef.current) / 1000;
+      if (elapsed >= REAL_TOTAL) {
+        setRealElapsed(REAL_TOTAL);
+        setRunning(false);
+        clearInterval(id);
+      } else {
+        setRealElapsed(elapsed);
+      }
+    }, 70);
+    return () => {
+      if (startRef.current) {
+        accumulatedRef.current += (Date.now() - startRef.current) / 1000;
+        startRef.current = null;
+      }
+      clearInterval(id);
+    };
+  }, [active, running]);
+
+  useEffect(() => {
+    if (!active && running) setRunning(false);
+  }, [active, running]);
+
+  useEffect(() => {
+    if (!running || displayedInt > 60 || displayedInt <= 0) return;
+    const id = setInterval(() => setPhraseIdx((i) => (i + 1) % S.phrases.length), 2600);
+    return () => clearInterval(id);
+  }, [running, displayedInt, S.phrases.length]);
+
+  useEffect(() => {
+    if (displayedInt === 60) setPhraseIdx(0);
+  }, [displayedInt]);
+
+  const handleToggle = () => {
+    if (isDone) {
+      accumulatedRef.current = 0;
+      startRef.current = null;
+      setRealElapsed(0);
+      setRunning(false);
+      setPhraseIdx(0);
+    } else {
+      setRunning((v) => !v);
+    }
+  };
+  const handleReset = () => {
+    accumulatedRef.current = 0;
+    startRef.current = null;
+    setRealElapsed(0);
+    setRunning(false);
+    setPhraseIdx(0);
+  };
+
+  return (
+    <>
+      <h2>
+        <Icon name={S.titleIcon} /> {S.title}
+      </h2>
+      <div className={`coffee-break ${isWarning ? "warning" : ""} ${isDone ? "done" : ""} ${running ? "running" : "paused"}`}>
+        <div className="coffee-deco">
+          <span className="blob b1" />
+          <span className="blob b2" />
+          <span className="bean b1">
+            <Icon name="coffee" />
+          </span>
+          <span className="bean b2">
+            <Icon name="coffee" />
+          </span>
+        </div>
+        <div className="coffee-break-main">
+          <div
+            className="timer-ring-wrap"
+            onClick={handleToggle}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleToggle();
+              }
+            }}
+          >
+            <svg className="timer-ring" width="260" height="260" viewBox="0 0 260 260">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="var(--accent)" />
+                  <stop offset="100%" stopColor="var(--amber)" />
+                </linearGradient>
+                <linearGradient id="ringGradWarn" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="var(--amber)" />
+                  <stop offset="100%" stopColor="var(--red)" />
+                </linearGradient>
+              </defs>
+              <circle className="ring-bg" cx="130" cy="130" r={r} />
+              <circle
+                className="ring-progress"
+                cx="130"
+                cy="130"
+                r={r}
+                strokeDasharray={circ}
+                strokeDashoffset={offset}
+                style={{ stroke: isWarning ? "url(#ringGradWarn)" : isDone ? "var(--green)" : "url(#ringGrad)" }}
+              />
+            </svg>
+            <div className="timer-center">
+              {isDone ? (
+                <>
+                  <div className="timer-done-icon">
+                    <Icon name="confetti" />
+                  </div>
+                  <div className="timer-done-text">{S.done}</div>
+                  <div className="timer-label">clic para repetir</div>
+                </>
+              ) : (
+                <>
+                  <div className="timer-digits">
+                    <span>{mins}</span>
+                    <span className="timer-colon">:</span>
+                    <span>{secs}</span>
+                  </div>
+                  {!running && !isDone && (
+                    <div className="timer-label">{realElapsed === 0 ? "inicio" : "pausado"}</div>
+                  )}
+                  {running && !isDone && (
+                    <div className="coffee-cup steaming">
+                      <Icon name="coffee" />
+                      <div className="steam">
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+          <div className="timer-side">
+            <div className="timer-hint">
+              <Icon name="timer" /> {S.hint}
+            </div>
+            <div className="timer-controls">
+              {!isDone ? (
+                <>
+                  <button className={`timer-btn primary ${running ? "pause" : "play"}`} onClick={handleToggle}>
+                    <Icon name={running ? "pause" : "play"} /> {running ? "Pausar" : realElapsed === 0 ? "Iniciar 10:00" : "Reanudar"}
+                  </button>
+                  <button className="timer-btn ghost" onClick={handleReset}>
+                    <Icon name="arrow-counter-clockwise" /> Reiniciar
+                  </button>
+                </>
+              ) : (
+                <button className="timer-btn primary play" onClick={handleReset}>
+                  <Icon name="arrow-counter-clockwise" /> Repetir pausa
+                </button>
+              )}
+            </div>
+            <div className="timer-bar">
+              <div className="timer-bar-fill" style={{ width: `${pct * 100}%` }} />
+            </div>
+            <div className="timer-bar-labels">
+              <span>10:00</span>
+              <span>00:00</span>
+            </div>
+            {isWarning && (
+              <div className="funny-ticker" key={phraseIdx}>
+                <Icon name="megaphone" />
+                <span>{S.phrases[phraseIdx]}</span>
+              </div>
+            )}
+            {!isWarning && !isDone && (
+              <div className="timer-subtle">
+                <Icon name="sparkle" /> Favor comer con la boca cerrada
+              </div>
+            )}
+          </div>
+        </div>
+        {isWarning && <div className="coffee-pulse-bg" />}
+      </div>
+    </>
+  );
+}
 
 function ETLSlide({ active }) {
   const S = C.etl;
@@ -201,65 +697,6 @@ function BatchStreamingSlide({ active }) {
           </div>
         </div>
       </div>
-      <ul className="fact-list">
-        <li>
-          <Icon name={S.fact.icon} />
-          {S.fact.text}
-        </li>
-      </ul>
-    </>
-  );
-}
-
-function ETLTSlide() {
-  const S = C.etlt;
-  return (
-    <>
-      <h2>
-        <Icon name={S.titleIcon} /> {S.title}
-      </h2>
-      <div className="etlt-diagram">
-        <div className={`etlt-step ${S.steps[0].variant || ""}`.trim()}>
-          <Icon name={S.steps[0].icon} />
-          <b>{S.steps[0].title}</b>
-          <span>{S.steps[0].sub}</span>
-        </div>
-        <div className={`etlt-arrow ${S.arrows[0].size}`}>
-          <i className="ph ph-arrow-right" />
-          <span>{S.arrows[0].text}</span>
-        </div>
-        <div className={`etlt-step ${S.steps[1].variant}`}>
-          <Icon name={S.steps[1].icon} />
-          <b>{S.steps[1].title}</b>
-          <span>{S.steps[1].sub}</span>
-        </div>
-        <div className="etlt-arrow">
-          <i className="ph ph-arrow-right" />
-        </div>
-        <div className={`etlt-step ${S.steps[2].variant}`}>
-          <Icon name={S.steps[2].icon} />
-          <b>{S.steps[2].title}</b>
-          <span>{S.steps[2].sub}</span>
-        </div>
-        <div className="etlt-arrow">
-          <i className="ph ph-arrow-right" />
-          <span>{S.arrows[2].text}</span>
-        </div>
-        <div className={`etlt-step ${S.steps[3].variant}`}>
-          <Icon name={S.steps[3].icon} />
-          <b>{S.steps[3].title}</b>
-          <span>{S.steps[3].sub}</span>
-        </div>
-      </div>
-
-      <div className="dbt-callout">
-        <Icon name={S.dbt.icon} />
-        <div>
-          <b>{S.dbt.title}</b>
-          <span>{S.dbt.text}</span>
-        </div>
-      </div>
-
       <ul className="fact-list">
         <li>
           <Icon name={S.fact.icon} />
@@ -625,7 +1062,7 @@ function PipelineSlide({ active }) {
       setStep(0);
       return;
     }
-    const delay = step === 5 ? 3500 : 900;
+    const delay = step === 5 ? 5000 : 1400;
     const t = setTimeout(() => setStep((s) => (s + 1) % 6), delay);
     return () => clearTimeout(t);
   }, [active, step]);
@@ -724,16 +1161,25 @@ function PuenteSlide() {
 }
 
 export const PONENTE2 = [
+  HookSlide,
+  CadenaSlide,
+  EmpresaDatosSlide,
+  LimitacionesSlide,
+  EtlAnalogiaSlide,
   ETLSlide,
+  ProblemaEtlSlide,
+  EltAnalogiaSlide,
   ELTSlide,
   VersusSlide,
+  CoffeeBreakSlide,
   BatchStreamingSlide,
-  ETLTSlide,
   TimelineSlide,
   WarehouseSlide,
   LakeSlide,
+  SwampSlide,
   LakehouseSlide,
   CompareSlide,
+  AcidSlide,
   KafkaSlide,
   SparkSlide,
   AirflowSlide,

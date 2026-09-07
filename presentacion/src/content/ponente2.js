@@ -1,4 +1,44 @@
 export const PONENTE2_CONTENT = {
+  hook: {
+    title: "Un click",
+    titleIcon: "cursor-click",
+    button: "Comprar ahora",
+    hint: "Para quien compra es un gesto. Para la infraestructura es el inicio de una cadena de eventos."
+  },
+  cadena: {
+    title: "¿Qué está pasando realmente?",
+    titleIcon: "flow-arrow",
+    steps: ["Clic", "Evento", "Transporte", "Procesamiento", "Almacenamiento", "Análisis", "Decisión"]
+  },
+  empresaDatos: {
+    title: "Toda empresa es una empresa de datos",
+    titleIcon: "buildings",
+    desc: "Independientemente de lo que venda, la operación depende de datos para decidir.",
+    items: [
+      { icon: "storefront", label: "Retail", sub: "vende productos" },
+      { icon: "car", label: "Movilidad", sub: "traslada personas" },
+      { icon: "first-aid-kit", label: "Salud", sub: "atiende pacientes" }
+    ],
+    fact: { icon: "database", text: "El producto cambia, la necesidad de datos es común. Sin datos no hay inventario, ruta ni diagnóstico." }
+  },
+  limitaciones: {
+    title: "Para entender cómo se mueven los datos hoy, hay que entender las limitaciones del pasado",
+    titleIcon: "clock-counter-clockwise",
+    highlight: "Almacenar era sumamente costoso",
+    detail: "Cada megabyte ocupaba discos físicos y presupuesto. Guardar todo no era opción.",
+    fact: { icon: "hard-drives", text: "El costo obligó a filtrar y resumir antes de guardar. Solo lo considerado esencial llegaba al almacén central." }
+  },
+  etlAnalogia: {
+    title: "ETL. Cocinar antes de guardar",
+    titleIcon: "cooking-pot",
+    steps: [
+      { icon: "shopping-cart", label: "Ingredientes", sub: "datos de origen" },
+      { icon: "knife", label: "Cocinar / limpiar", sub: "filtrar, corregir, unificar" },
+      { icon: "bowl-food", label: "Plato final", sub: "solo lo transformado" }
+    ],
+    note: "Solo guardamos lo que creemos que necesitaremos.",
+    fact: { icon: "lightbulb", text: "La receta se decide antes de almacenar. Lo no previsto se descarta." }
+  },
   etl: {
     title: "ETL. Limpiar antes de guardar",
     titleIcon: "funnel-simple",
@@ -9,12 +49,30 @@ export const PONENTE2_CONTENT = {
     ],
     alert: {
       icon: "warning-circle",
-      text: "El dato crudo se descarta. Un cambio en la regla exige reextraer desde el origen."
+      text: "Raw data se descarta. Un cambio en la regla exige reextraer desde el origen."
     },
     facts: [
       { icon: "clock-countdown", text: "Antes almacenar era costoso. Disco limitado en los 90, cada fila contaba.", warn: false },
       { icon: "warning-circle", text: "Un cambio en la lógica obliga a reprocesar desde la fuente y a veces la fuente ya no conserva el histórico.", warn: true }
     ]
+  },
+  problemaEtl: {
+    title: "¿Dónde están los ingredientes originales?",
+    titleIcon: "question",
+    chef: "Mañana el chef cambia la receta",
+    answer: "Ya no están",
+    fact: { icon: "warning-circle", text: "Sin ingredientes no hay nueva receta. Sin raw data no hay reproceso." }
+  },
+  eltAnalogia: {
+    title: "ELT. Ahora tenemos una despensa enorme",
+    titleIcon: "warehouse",
+    steps: [
+      { icon: "shopping-cart", label: "Comprar ingredientes", sub: "extraer todo en crudo" },
+      { icon: "warehouse", label: "Gran despensa", sub: "lake en la nube, barato y elástico" },
+      { icon: "cooking-pot", label: "Cocinar cuando sea necesario", sub: "transformar dentro del warehouse" }
+    ],
+    note: "Guardar todo permite decidir la receta después.",
+    fact: { icon: "lightbulb", text: "Con almacenamiento barato, la decisión se posterga. La raw data permanece disponible." }
   },
   elt: {
     title: "ELT. Cargar todo, transformar después",
@@ -26,11 +84,11 @@ export const PONENTE2_CONTENT = {
     ],
     alert: {
       icon: "check-circle",
-      text: "El dato crudo persiste. Permite retransformar sin volver al origen."
+      text: "Raw data persiste. Permite retransformar sin volver al origen."
     },
     bignums: [
       { value: 0.023, suffix: "$ /GB mes", variant: "green", decimals: 3, cap: "S3 Standard actual. En los 90, miles de dólares por GB. Por ello ELT no existía." },
-      { value: "∞", suffix: "", variant: "", cap: "Reprocesos posibles sobre el mismo dato crudo." }
+      { value: "∞", suffix: "", variant: "", cap: "Reprocesos posibles sobre el mismo raw data." }
     ]
   },
   versus: {
@@ -40,17 +98,17 @@ export const PONENTE2_CONTENT = {
       icon: "funnel-simple",
       title: "ETL",
       sub: "Transforma fuera",
-      items: ["Guarda solo lo limpio", "Dato crudo descartado", "Rígido ante cambios del negocio", "Servidor intermedio a cargo"]
+      items: ["Guarda solo lo limpio", "raw data descartado", "Rígido ante cambios del negocio", "Servidor intermedio a cargo"]
     },
     right: {
       icon: "cloud-arrow-up",
       title: "ELT",
       sub: "Transforma dentro",
-      items: ["Guarda todo en crudo", "Dato crudo disponible", "Flexible ante cambios de lógica", "El warehouse ejecuta el trabajo"]
+      items: ["Guarda todo en crudo", "raw data disponible", "Flexible ante cambios de lógica", "El warehouse ejecuta el trabajo"]
     },
     fact: {
       icon: "lightbulb",
-      text: "Ninguno es superior en todos los casos. ETL aún es útil si el origen no puede entregar dato crudo o hay datos sensibles."
+      text: "Ninguno es superior en todos los casos. ETL aún es útil si el origen no puede entregar raw data o hay datos sensibles."
     }
   },
   batchStreaming: {
@@ -74,31 +132,7 @@ export const PONENTE2_CONTENT = {
     },
     fact: {
       icon: "check-circle",
-      text: "La mayoría de organizaciones usa ambos. Batch para lo estratégico, streaming para lo que requiere respuesta inmediata."
-    }
-  },
-  etlt: {
-    title: "ET(L)T. Variante intermedia",
-    titleIcon: "gear",
-    steps: [
-      { title: "Extract", sub: "fuentes", icon: "hard-drives" },
-      { title: "t", sub: "validar, enmascarar", icon: "shield-check", variant: "light" },
-      { title: "Load", sub: "crudo y casi crudo", icon: "cloud", variant: "solid" },
-      { title: "Transform", sub: "dentro del warehouse", icon: "code", variant: "accent" }
-    ],
-    arrows: [
-      { text: "ligero", size: "small" },
-      { text: "", size: "" },
-      { text: "pesado", size: "" }
-    ],
-    dbt: {
-      icon: "code",
-      title: "dbt ejecuta la transformación final con SQL",
-      text: "Modela tablas como select, versiona el código y el warehouse compila. Sin servidores adicionales."
-    },
-    fact: {
-      icon: "lightbulb",
-      text: "En la práctica, ELT puro es poco común. Una transformación ligera previa evita almacenar datos inválidos y reduce exposición de información sensible."
+      text: "La mayoría de organizaciones usa ambos."
     }
   },
   timeline: {
@@ -145,6 +179,16 @@ export const PONENTE2_CONTENT = {
       { icon: "warning-circle", text: "Si no se tiene un catálogo establecido ni buena gobernanza se vuelve un data swamp. El dato existe pero es difícil localizarlo y validar su utilidad.", warn: true }
     ]
   },
+  swamp: {
+    title: "¿Y si guardamos todo sin orden?",
+    titleIcon: "warning-circle",
+    folder: "Carpeta de Descargas",
+    files: ["reporte_final.pdf", "instalador_v2.exe", "foto_mascota.jpg", "datos_sin_nombre.csv"],
+    question: "¿Dónde está el archivo que necesito?",
+    label: "Data Swamp",
+    desc: "Un lago sin catálogo se vuelve pantano. Todo entra, nada se encuentra.",
+    fact: { icon: "warning-circle", text: "Sin gobierno el lago pierde valor. El volumen sin orden no es un activo." }
+  },
   lakehouse: {
     title: "Data lakehouse. Unión de lake y warehouse",
     titleIcon: "stack-simple",
@@ -173,18 +217,43 @@ export const PONENTE2_CONTENT = {
       { icon: "stack-simple", label: "lakehouse", variant: "accent" }
     ],
     rows: [
-      { label: "Qué guarda", cols: ["solo tabla", "cualquier archivo", "tabla y archivo"], strongLast: true },
-      { label: "Esquema", cols: ["al escribir", "al leer", "las dos"], strongLast: true },
-      { label: "Costo", cols: ["alto", "bajo", "bajo"], variants: ["warn", "good", "good"] },
-      { label: "ACID", cols: ["sí", "no", "sí"], variants: ["", "warn", "strong"] },
-      { label: "Para qué sirve", cols: ["BI clásico", "raw + ML", "todo lo anterior"], strongLast: true }
+      { label: "Qué guarda", cols: ["Principalmente tablas", "Cualquier archivo", "Tablas y archivos"], strongLast: true },
+      { label: "Esquema", cols: ["al escribir", "al leer", "ambos"], strongLast: true },
+      { label: "Costo", cols: ["alto", "bajo", "bajo"], variants: ["warn", "good", "good strong"] },
+      { label: "ACID", cols: ["sí", "no nativo", "sí"], variants: ["", "warn", "strong"] },
+      { label: "Para qué sirve", cols: ["BI / reporting", "Raw data + ML", "BI + ML + analytics"], strongLast: true }
     ]
   },
+  acid: {
+    title: "¿Y si algo falla a mitad de camino?",
+    titleIcon: "shield-check",
+    transfer: "Cuenta A — $100 — Cuenta B",
+    fail: "Fallo de red",
+    question: "¿Puede desaparecer el dinero a mitad del proceso?",
+    answer: "ACID",
+    desc: "Atomicidad, consistencia, aislamiento y durabilidad.",
+    fact: { icon: "check-circle", text: "El lakehouse aplica ACID. Evita escrituras parciales y deja el dato siempre en estado válido." }
+  },
+  coffeeBreak: {
+    title: "Pausa para unos nachitos preparados.",
+    titleIcon: "coffee",
+    durationSec: 600,
+    hint: "Provechito queridos amigos",
+    phrases: [
+      "Vayan sentándose, chicos",
+      "Preparen motores",
+      "Último sorbo y volvemos",
+      "Guarden el tinto, que seguimos",
+      "En un minuto arranca Apache",
+      "Justin pone atención"
+    ],
+    done: "Estamos de vuelta"
+  },
   kafka: {
-    title: "Kafka. Transporte de eventos distribuido",
+    title: "¿Quién asegura que el evento no se pierda?",
     titleIcon: "broadcast",
     producers: { icon: "hard-drives", title: "Productores", sub: "web, app, sensores" },
-    core: { icon: "queue", label: "Kafka log · particiones", replica: "replicado x3 · rebobinable" },
+    core: { icon: "queue", label: "Kafka log", replica: "replicado 3 veces · rebobinable" },
     consumers: { icon: "cpu", title: "Consumidores", sub: "Spark, warehouse, alertas" },
     facts: [
       { icon: "check-circle", text: "No es una cola que se borra al leer. Es un log. Permite releer desde un punto anterior si hay una falla." },
@@ -192,7 +261,7 @@ export const PONENTE2_CONTENT = {
     ]
   },
   spark: {
-    title: "Spark. Cómputo distribuido",
+    title: "¿Qué pasa si una máquina no alcanza?",
     titleIcon: "cpu",
     single: {
       icon: "hard-drives",
@@ -246,19 +315,17 @@ export const PONENTE2_CONTENT = {
     titleIcon: "plugs-connected",
     zones: [
       { icon: "broadcast", title: "Kafka", desc: "Transporta. No transforma.", items: ["Amortigua picos", "Garantiza que no hay pérdida"] },
-      { icon: "cpu", title: "Spark + dbt", desc: "Transforma a escala.", items: ["Spark limpia volumen", "dbt modela con SQL"], variant: "core" },
+      { icon: "cpu", title: "Spark", desc: "Transforma a escala.", items: ["Procesa grandes volúmenes en paralelo", "Normaliza y enriquece datos"], variant: "core" },
       { icon: "git-branch", title: "Airflow", desc: "Ordena. No mueve datos.", items: ["Dispara cada bloque", "Reintenta y notifica"] }
     ],
-    callout: { icon: "stack-simple", text: "Todo escribe en el mismo sitio. El lakehouse. Bronze con dato crudo, Silver limpio, Gold para el solver." }
+    callout: { icon: "stack-simple", text: "Todo escribe en el mismo sitio. El lakehouse. Bronze con raw data, Silver limpio, Gold para el solver." }
   },
   puente: {
     title: "¿Cómo se conecta esto directamente con los modelos matemáticos de Investigación de Operaciones?",
     titleIcon: "flag-checkered",
     facts: [
-      { icon: "arrow-right", text: "Con el pipeline operativo, la siguiente etapa conecta esa tabla a un modelo de IO. Qué función se minimiza y qué restricciones aplican." },
-      { icon: "arrow-right", text: "Cada cuánto resuelve el solver y qué ocurre si un dato llega tarde." }
-    ],
-    src: "Sin dato confiable no hay óptimo válido."
+      { icon: "arrow-right", text: "Sin dato confiable no hay óptimo válido." }
+    ]
   },
   numbers: {
     s3Cost: 0.023,
