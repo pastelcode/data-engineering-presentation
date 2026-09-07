@@ -239,20 +239,6 @@ export const PONENTE1_CONTENT = {
   },
   puente: {
     title: "Siguiente etapa. Arquitectura interna",
-    titleIcon: "flag-checkered",
-    bignum: {
-      value: "2",
-      cap: "El siguiente nivel: la arquitectura interna y los mecanismos del flujo de datos."
-    },
-    facts: [
-      {
-        icon: "arrow-right",
-        text: "Se revisaron las causas de falla del dato, los criterios de calidad y el ciclo que debe seguir."
-      },
-      {
-        icon: "arrow-right",
-        text: "A continuación se examinan los componentes que transportan y transforman los datos y los puntos donde aparecen cuellos de botella."
-      }
-    ]
+    titleIcon: "flag-checkered"
   }
 };

@@ -319,25 +319,11 @@ export const PONENTE1 = [
   () => {
     const S = C.puente;
     return (
-      <>
-        <h2>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "52vh", textAlign: "center" }}>
+        <h1 style={{ display: "flex", gap: "18px", alignItems: "center", justifyContent: "center", lineHeight: 1.05 }}>
           <Icon name={S.titleIcon} /> {S.title}
-        </h2>
-        <div className="bignum-row">
-          <div className="bignum-block">
-            <div className="bignum">{S.bignum.value}</div>
-            <div className="cap">{S.bignum.cap}</div>
-          </div>
-        </div>
-        <ul className="fact-list">
-          {S.facts.map((f, i) => (
-            <li key={i}>
-              <Icon name={f.icon} />
-              {f.text}
-            </li>
-          ))}
-        </ul>
-      </>
+        </h1>
+      </div>
     );
   },
 ];
