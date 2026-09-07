@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { PORTADA } from "./slides/portada";
 import { PONENTE1 } from "./slides/ponente1";
+import { PONENTE3 } from "./slides/ponente3";
 import { Icon } from "./slides/Icon";
 
-const SLIDES = [...PORTADA, ...PONENTE1];
+const SLIDES = [...PORTADA, ...PONENTE1, ...PONENTE3];
 
 function Nav({ cur, total, go, setCur, isFullscreen, toggleFullscreen }) {
   return (
