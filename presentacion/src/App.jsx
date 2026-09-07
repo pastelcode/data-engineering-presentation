@@ -7,7 +7,7 @@ import { Icon } from "./slides/Icon";
 
 const SLIDES = [...PORTADA, ...PONENTE1, ...PONENTE2, ...PONENTE3];
 
-function Nav({ cur, total, go, setCur, isFullscreen, toggleFullscreen }) {
+function Nav({ cur, total, go, setCur, titles, isFullscreen, toggleFullscreen }) {
   return (
     <div className="nav">
       <button
@@ -33,6 +33,7 @@ function Nav({ cur, total, go, setCur, isFullscreen, toggleFullscreen }) {
             className={i === cur ? "on" : ""}
             onClick={() => setCur(i)}
             aria-label={`Ir a ${i + 1}`}
+            title={titles[i] || `Ir a ${i + 1}`}
           />
         ))}
       </div>
@@ -48,6 +49,7 @@ function Nav({ cur, total, go, setCur, isFullscreen, toggleFullscreen }) {
 
 export default function App() {
   const [cur, setCur] = useState(0);
+  const [titles, setTitles] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const go = useCallback(
     (d) => setCur((c) => Math.max(0, Math.min(SLIDES.length - 1, c + d))),
@@ -60,6 +62,16 @@ export default function App() {
     } else {
       document.exitFullscreen?.().catch(() => {});
     }
+  }, []);
+
+  useEffect(() => {
+    const els = document.querySelectorAll(".slide");
+    setTitles(
+      Array.from(els).map((el) => {
+        const h = el.querySelector("h1, h2");
+        return h ? h.textContent.trim() : "";
+      }),
+    );
   }, []);
 
   useEffect(() => {
@@ -106,6 +118,7 @@ export default function App() {
         total={SLIDES.length}
         go={go}
         setCur={setCur}
+        titles={titles}
         isFullscreen={isFullscreen}
         toggleFullscreen={toggleFullscreen}
       />
