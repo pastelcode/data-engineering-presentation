@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { PORTADA } from "./slides/portada";
-import { PONENTE1 } from "./slides/ponente1";
 import { PONENTE2 } from "./slides/ponente2";
 import { Icon } from "./slides/Icon";
 
-const SLIDES = [...PORTADA, ...PONENTE1, ...PONENTE2];
+const SLIDES = [...PONENTE2];
 
 function Nav({ cur, total, go, setCur, isFullscreen, toggleFullscreen }) {
   return (
