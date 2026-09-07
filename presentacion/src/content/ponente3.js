@@ -56,7 +56,7 @@ export const PONENTE3_CONTENT = {
       },
       {
         icon: "clock-countdown",
-        text: "Cada asignación es un problema de optimización que se resuelve en segundos.",
+        text: "Cada asignación se resuelve en segundos. Los datos cambian cada 3.",
         warn: false
       },
       {
@@ -66,14 +66,43 @@ export const PONENTE3_CONTENT = {
       }
     ]
   },
+  codicioso: {
+    title: "Codicioso contra global",
+    titleIcon: "shuffle",
+    bignums: [
+      { value: 1, suffix: "min", cap: "Auto 1 a pasajero A." },
+      { value: 20, suffix: "min", variant: "amber", cap: "Auto 1 a pasajero B." },
+      { value: 4, suffix: "min", cap: "Auto 2 a ambos." }
+    ],
+    facts: [
+      {
+        icon: "warning-circle",
+        text: "Greedy asigna auto 1 a A por cercanía. Condena a B a 20 minutos.",
+        warn: true
+      },
+      {
+        icon: "check-circle",
+        text: "El óptimo global sacrifica segundos de A. Auto 2 a A, auto 1 a B. Promedio bajo.",
+        warn: false
+      }
+    ]
+  },
   emparejamiento: {
     title: "Emparejamiento de peso máximo",
     titleIcon: "scales",
-    bignum: {
-      value: "3-5",
-      suffix: "s",
-      cap: "Ventana de lote para resolver el emparejamiento. La asignación se recalcula en bloques de segundos."
-    },
+    bignums: [
+      {
+        value: "3-5",
+        suffix: "s",
+        cap: "Ventana de lote para resolver el emparejamiento. La asignación se recalcula en bloques de segundos."
+      },
+      {
+        value: 2,
+        suffix: "s",
+        variant: "amber",
+        cap: "Si el sistema tarda más en absorber la información y correr el algoritmo, el conductor ya avanzó y el plan quedó obsoleto."
+      }
+    ],
     facts: [
       {
         icon: "git-merge",
@@ -96,7 +125,7 @@ export const PONENTE3_CONTENT = {
     titleIcon: "broadcast",
     fact: {
       icon: "warning-circle",
-      text: "Comparar cada ping con los demás exige calcular n² distancias.",
+      text: "Un millón de puntos GPS flotantes. Calcular distancias exactas exige trigonometría lentísima. Comparar cada ping con los demás exige calcular n² distancias.",
       warn: true
     }
   },
@@ -105,27 +134,28 @@ export const PONENTE3_CONTENT = {
     titleIcon: "hexagon",
     fact: {
       icon: "hexagon",
-      text: "Cada coordenada se asigna a una celda hexagonal. La oferta y la demanda se miden por zona.",
+      text: "Cada coordenada cae en una celda hexagonal. 50 pasajeros y 10 conductores se vuelven conteo instantáneo.",
       warn: false
     }
   },
   pipeline: {
     title: "Del ping al push",
     titleIcon: "flow-arrow",
+    steps: [
+      { icon: "database", title: "1. Ingesta", sub: "colchón ante picos", tag: "Kafka · protege al núcleo" },
+      { icon: "lightning", title: "2. Memoria", sub: "enriquece en caliente", tag: "H3 + reglas de dominio" },
+      { icon: "cpu", title: "3. Respuesta", sub: "decide y notifica", tag: "solver + push gRPC" }
+    ],
+    legend: ["Ingesta", "Memoria", "Respuesta"],
     facts: [
       {
-        icon: "database",
-        text: "Ingesta. Kafka recibe los pings de la app móvil.",
-        warn: false
-      },
-      {
         icon: "lightning",
-        text: "Estado en memoria. Redis o Cassandra guardan ETA, calificación y riesgo de cancelación.",
+        text: "El contexto entra en milisegundos: calificación, riesgo de cancelación, tarifa dinámica.",
         warn: false
       },
       {
-        icon: "cpu",
-        text: "Resolución y salida. El solver empareja con la sub-matriz local. La notificación sale por gRPC. Sin el pipeline sub-segundo, la asignación queda obsoleta.",
+        icon: "check-circle",
+        text: "El algoritmo más refinado vale cero si el flujo es lento.",
         warn: false
       }
     ]
