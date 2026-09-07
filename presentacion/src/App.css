@@ -332,6 +332,100 @@ h2 {
   vertical-align: middle;
 }
 
+.pingmap {
+  position: relative;
+  width: 100%;
+  height: 440px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper-2);
+  overflow: hidden;
+  margin-top: 28px;
+}
+.map-bg,
+.map-cells {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.map-road {
+  stroke: #e2ded4;
+  stroke-width: 3;
+}
+.map-water {
+  fill: #dce7f0;
+}
+.map-park {
+  fill: #dfeee6;
+}
+.h3-cell {
+  fill: rgba(79, 107, 143, 0.05);
+  stroke: rgba(79, 107, 143, 0.4);
+  stroke-width: 1.5;
+}
+.gps {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+}
+.gps .dot {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.gps .ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0;
+  animation: ripple 2.6s ease-out infinite;
+}
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(3.8);
+    opacity: 0;
+  }
+}
+
+.map-lasers {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.laser {
+  stroke: var(--amber);
+  stroke-width: 2;
+  opacity: 0;
+  animation: laserIn 0.45s ease-out forwards;
+}
+
+@keyframes laserIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+.gps.source .dot {
+  background: var(--amber);
+}
+
+.gps.source .ring {
+  border-color: var(--amber);
+}
+
 .vs {
   position: relative;
   display: grid;
@@ -1761,6 +1855,44 @@ h2 {
   color: var(--accent);
 }
 
+/* Pipeline big: variante de 3 tarjetas grandes (ponente 3) */
+.pipeline.big {
+  gap: 10px;
+  position: relative;
+}
+.pipeline.big .pipe-node {
+  border-radius: 18px;
+  padding: 28px 20px;
+  position: relative;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+.pipeline.big .pipe-node > i {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+.pipeline.big .pipe-node b {
+  font-size: 18px;
+}
+.pipeline.big .pipe-node span {
+  font-size: 14px;
+}
+.pipeline.big .pipe-sub {
+  margin-top: 8px;
+  font-size: 12px !important;
+  padding: 4px 10px;
+}
+.pipeline.big .pipe-edge,
+.pipeline.big .pipe-line {
+  width: 48px;
+}
+.pipeline.big .pipe-line {
+  height: 4px;
+}
+
 .store-callout {
   margin-top: 16px;
   display: flex;
@@ -2619,4 +2751,577 @@ h2 {
     transform: translateY(-6px) rotate(-10deg);
     opacity: 0.3;
   }
+}
+/* Rayos que sobrecargan la tarjeta de memoria */
+.rays {
+  position: absolute;
+  top: -36px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  pointer-events: none;
+}
+.rays i {
+  font-size: 26px;
+  color: var(--amber);
+  animation: rayFlash 0.75s ease-in-out infinite;
+}
+@keyframes rayFlash {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+.pipe-node.charged {
+  border-color: var(--amber);
+  box-shadow:
+    0 0 0 3px rgba(217, 154, 61, 0.25),
+    0 8px 24px rgba(217, 154, 61, 0.25);
+}
+
+/* Avión que sale hacia el borde derecho */
+.send-fly {
+  position: absolute;
+  top: 50%;
+  left: 78%;
+  font-size: 30px;
+  color: var(--accent);
+  transform: translateY(-50%);
+  animation: sendFly 1.6s ease-in infinite;
+  pointer-events: none;
+}
+@keyframes sendFly {
+  0% {
+    left: 78%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    left: 106%;
+    opacity: 0;
+  }
+}
+
+/* Tres universos: tarjetas con ritmos de sincronización distintos */
+.universos {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+}
+.uni-card {
+  flex: 1;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px 20px;
+  text-align: center;
+}
+.uni-card i {
+  font-size: 40px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 10px;
+}
+.uni-card b {
+  display: block;
+  font-size: 20px;
+}
+.uni-card span {
+  font-size: 14px;
+  color: var(--muted);
+  display: block;
+}
+.sync-track {
+  margin: 16px auto 8px auto;
+  width: 100%;
+  height: 4px;
+  background: var(--paper-2);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+}
+.sync-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  animation: syncTravel 3s linear infinite;
+}
+@keyframes syncTravel {
+  0% {
+    left: 0;
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 8px);
+    opacity: 1;
+  }
+}
+.rhythm {
+  font-size: 13px !important;
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+
+/* Espejismo: sello que cae sobre la cifra */
+.mirage {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  margin-top: 28px;
+  padding: 8px 24px 18px 24px;
+}
+.stamp {
+  position: absolute;
+  top: 18px;
+  right: 36px;
+  border: 4px solid var(--red);
+  color: var(--red);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 10px;
+  transform: rotate(-9deg) scale(2.4);
+  opacity: 0;
+}
+.stamp.slam {
+  animation: stampIn 0.45s cubic-bezier(0.2, 2.2, 0.4, 1) forwards;
+}
+@keyframes stampIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-9deg) scale(2.4);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(-9deg) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-9deg) scale(1);
+  }
+}
+
+/* Fusión: tres fuentes fluyen al Lakehouse */
+.merge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+.merge-srcs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.merge-src {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.merge-track {
+  flex: 1;
+  height: 4px;
+  background: var(--paper-2);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+}
+.merge-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  animation: mergeFlow 1.4s linear infinite;
+}
+@keyframes mergeFlow {
+  0% {
+    left: 0;
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 8px);
+    opacity: 1;
+  }
+}
+.merge-center {
+  flex: none;
+  width: 200px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 26px 16px;
+  text-align: center;
+  opacity: 0.4;
+  transition:
+    opacity 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+.merge-center.on {
+  opacity: 1;
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px rgba(109, 124, 224, 0.12);
+}
+.merge-center i {
+  font-size: 40px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 10px;
+}
+.merge-center b {
+  font-size: 20px;
+}
+
+/* Matriz de tiempos: autos por pasajeros */
+.matrix {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 10px;
+  margin-top: 28px;
+  align-items: stretch;
+}
+.m-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 6px 0;
+}
+.m-head i {
+  font-size: 20px;
+  color: var(--accent);
+}
+.m-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 19px;
+  font-weight: 700;
+  padding: 0 14px 0 4px;
+}
+.m-row i {
+  font-size: 26px;
+  color: var(--accent);
+}
+.m-cell {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 10px;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-size: clamp(40px, 4.5vw, 64px);
+}
+.m-cell small {
+  font-size: 0.35em;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.m-cell.amber {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
+/* Validaciones que se marcan y desbloquean el solver */
+.checks {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 28px;
+}
+.check-card {
+  flex: 1;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px 16px;
+  text-align: center;
+  position: relative;
+  opacity: 0.4;
+  transition:
+    opacity 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+.check-card.done {
+  opacity: 1;
+  border-color: var(--green);
+  box-shadow: 0 6px 18px rgba(62, 154, 129, 0.12);
+}
+.check-card > i {
+  font-size: 40px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 10px;
+}
+.check-card.done > i {
+  color: var(--green);
+}
+.check-card b {
+  display: block;
+  font-size: 20px;
+}
+.check-card span {
+  font-size: 14px;
+  color: var(--muted);
+  display: block;
+}
+.check-badge {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+}
+.check-badge i {
+  font-size: 20px;
+  color: #fff;
+}
+.check-card.done .check-badge {
+  animation: checkPop 0.45s cubic-bezier(0.2, 2.2, 0.4, 1) forwards;
+}
+@keyframes checkPop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.check-arrow {
+  flex: none;
+  align-self: center;
+  font-size: 28px;
+  color: var(--accent);
+}
+.solver-node {
+  flex: 1.1;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  border-radius: 18px;
+  padding: 24px 16px;
+  text-align: center;
+  opacity: 0.55;
+  transition:
+    opacity 0.5s ease,
+    background 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+.solver-node > i {
+  font-size: 40px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 10px;
+  transition: color 0.5s ease;
+}
+.solver-node b {
+  display: block;
+  font-size: 20px;
+}
+.solver-node span {
+  font-size: 14px;
+  color: var(--muted);
+  display: block;
+}
+.solver-node.open {
+  opacity: 1;
+  background: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 0 8px 26px rgba(31, 36, 48, 0.3);
+}
+.solver-node.open > i {
+  color: var(--accent-light);
+}
+.solver-node.open b {
+  color: var(--paper);
+}
+.solver-node.open span {
+  color: var(--paper);
+  opacity: 0.8;
+}
+
+/* DevOps: Dev y Ops conectados en ciclo */
+.devops {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+}
+.do-node {
+  flex: none;
+  width: 190px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px 16px;
+  text-align: center;
+}
+.do-node i {
+  font-size: 40px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 10px;
+}
+.do-node b {
+  font-size: 20px;
+  display: block;
+}
+.do-node span {
+  font-size: 14px;
+  color: var(--muted);
+  display: block;
+}
+.do-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.do-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.do-label {
+  flex: none;
+  width: 92px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.do-track {
+  flex: 1;
+  height: 4px;
+  background: var(--paper-2);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+}
+.do-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  animation: doFlow 1.6s linear infinite;
+}
+.do-track.rev .do-dot {
+  animation-direction: reverse;
+}
+@keyframes doFlow {
+  0% {
+    left: 0;
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 8px);
+    opacity: 1;
+  }
+}
+
+/* Drift: distribución que se desplaza y relación que se rompe */
+.drift-chart {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  margin-top: 20px;
+  padding: 10px 16px 6px 16px;
+}
+.drift-chart svg {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.drift-chart .axis {
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+.drift-chart .curve {
+  fill: none;
+  stroke-width: 2.5;
+}
+.drift-chart .curve.before {
+  stroke: var(--muted);
+  opacity: 0.55;
+}
+.drift-chart .curve.after {
+  stroke: var(--amber);
+  opacity: 0;
+  transform: translateX(-70px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.drift-chart .curve.after.on {
+  opacity: 1;
+  transform: translateX(0);
+}
+.drift-chart .rel {
+  fill: none;
+  stroke-width: 2.5;
+}
+.drift-chart .rel.old {
+  stroke: var(--muted);
+  opacity: 0.55;
+}
+.drift-chart .rel.new {
+  stroke: var(--amber);
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+}
+.drift-chart .rel.new.on {
+  animation: drawRel 1.2s ease forwards;
+}
+@keyframes drawRel {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.drift-chart text {
+  font-size: 12px;
+  fill: var(--muted);
 }
